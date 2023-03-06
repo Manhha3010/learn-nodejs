@@ -10,7 +10,6 @@ process.stdin.on("data", (data) => {
         result.push(currentString);
         return;
       }
-
       backtrack(currentString + "1", remainingLength - 1);
       backtrack(currentString + "0", remainingLength - 1);
     }
@@ -18,18 +17,8 @@ process.stdin.on("data", (data) => {
     backtrack("", n);
     return result;
   }
-
-  //   binaryString(data)
-  //     .reverse()
-  //     .forEach((item, index) => {
-  //       if (index !== binaryString(data).length) {
-  //         console.log(item);
-  //         return;
-  //       }
-  //     });
-
+  //   console.log(binaryString(data).forEach((item) => console.log(item)));
   for (let i = 0; i < binaryString(data).length; i++) {
     console.log(binaryString(data)[i]);
   }
-  process.exit();
 });
