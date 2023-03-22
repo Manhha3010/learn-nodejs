@@ -3,39 +3,23 @@ const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
 });
-
-let numTestCases;
-let i = 1;
-
-rl.question("Nhap so luong test case: ", (answer) => {
-  numTestCases = parseInt(answer);
-
-  //   for (let i = 1; i <= numTestCases; i++) {
-  //     rl.question(`Nhap tien can rut va cua c (test case ${i}): `, (testCase) => {
-  //       let [moneyAmount, c] = testCase.split(" ").map(Number);
-
-  //       calculateNotes(moneyAmount, c);
-
-  //       // Đóng readline khi hoàn thành việc đọc dữ liệu đầu vào
-  //       if (i === numTestCases) {
-  //         rl.close();
-  //       }
-  //     });
-  //   }
-  while (i <= numTestCases) {
-    rl.question(`Nhap tien can rut va cua c (test case ${i}): `, (testCase) => {
-      let [moneyAmount, c] = testCase.split(" ").map(Number);
-
-      calculateNotes(moneyAmount, c);
-
-      // Đóng readline khi hoàn thành việc đọc dữ liệu đầu vào
-      if (i === numTestCases) {
-        rl.close();
-      }
+async function getInput() {
+  let numTestCases = await new Promise((resolve) => {
+    rl.question("", resolve);
+  });
+  for (let i = 1; i <= numTestCases; i++) {
+    const moneyAmount = await new Promise((resolve) => {
+      rl.question("", resolve);
     });
-    i++;
+    const c = await new Promise((resolve) => {
+      rl.question("", resolve);
+    });
+
+    calculateNotes(parseInt(moneyAmount), parseInt(c));
+    if (i === parseInt(numTestCases)) rl.close();
   }
-});
+}
+getInput();
 
 function calculateNotes(moneyAmount, c) {
   const denominations = [1000, 2000, 3000, 5000];
@@ -63,7 +47,8 @@ function calculateNotes(moneyAmount, c) {
 
   if (totalAmount === moneyAmount) {
     console.log(`${noteCount} ${c}`);
+    return;
   } else {
-    console.log(`0 ${c}`);
+    console.log(`0`);
   }
 }
